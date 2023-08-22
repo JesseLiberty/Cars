@@ -1,3 +1,6 @@
+using Cars.Data;
+using Cars.Data.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,12 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+// Load DB configuration and register the connection factory for injection
+var configuration = builder.Configuration;
+builder.Services.Configure<DbSettings>(configuration.GetSection("ConnectionStrings"));
+builder.Services.AddTransient<DatabaseConnectionFactory>();
+builder.Services.AddTransient<CarRepository>();
 
 var app = builder.Build();
 
