@@ -25,11 +25,48 @@ namespace Cars.Controllers
         }
         
         [HttpGet("{id}")]
-        public async Task<Car> Get(int id)
+        public async Task<ActionResult<Car>> Get(int id)
         {
-            // TODO: return 404 if not found?
-            return await carRepository.Get(id);
+            var car = await carRepository.Get(id);
+            if (car == null)
+            {
+                return NotFound();
+            }
+            return car;
         }
         
+        [HttpPut]
+        public async Task<IActionResult> Put([FromBody] Car car)
+        {
+            if (car.Id == 0)
+            {
+                return BadRequest("Id must be set");
+            }
+
+            await carRepository.UpsertAsync(car);
+            return NoContent();
+        }
+        
+        [HttpPost]
+        public async Task<ActionResult<Car>> Post([FromBody] Car car)
+        {
+            var newId = await carRepository.UpsertAsync(car);
+            if (newId > 0)
+            {
+                car.Id = newId;
+            }
+            return CreatedAtAction(nameof(Get), new { id = car.Id }, car);
+        }
+        
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(int id)
+        {
+            int affectedRows = await carRepository.DeleteAsync(id);
+            if (affectedRows == 0)
+            {
+                return NotFound();
+            }
+            return NoContent();
+        }
     }
 }
