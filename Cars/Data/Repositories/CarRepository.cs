@@ -3,6 +3,9 @@ using Dapper;
 
 namespace Cars.Data.Repositories;
 
+// Resources
+// https://github.com/DapperLib/Dapper
+// https://github.com/DapperLib/Dapper/tree/main/Dapper.SqlBuilder
 public class CarRepository
 {
     readonly DatabaseConnectionFactory databaseConnectionFactory;
@@ -12,10 +15,24 @@ public class CarRepository
         this.databaseConnectionFactory = databaseConnectionFactory;
     }
 
-    public async Task<IEnumerable<Car>> GetAll()
+    public async Task<IEnumerable<Car>> GetAll(bool returnDeletedRecords = false)
     {
+        var builder = new SqlBuilder();
+        var sqlTemplate = builder.AddTemplate("SELECT * FROM car /**where**/");
+        if (!returnDeletedRecords)
+        {
+            builder.Where("deleted=0 OR deleted IS NULL");
+        }
         using var db = databaseConnectionFactory.GetConnection();
-        return await db.QueryAsync<Car>("select * from car");
+        return await db.QueryAsync<Car>(sqlTemplate.RawSql,sqlTemplate.Parameters);
     }
+    
+    public async Task<Car> Get(int id)
+    {
+        var query = "select * from car where id=@id";
+        using var db = databaseConnectionFactory.GetConnection();
+        return await db.QuerySingleOrDefaultAsync<Car>(query, new {id});
+    }
+    
     
 }
