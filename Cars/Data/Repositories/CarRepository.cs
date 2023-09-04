@@ -21,7 +21,7 @@ public class CarRepository
         var sqlTemplate = builder.AddTemplate("SELECT * FROM car /**where**/");
         if (!returnDeletedRecords)
         {
-            builder.Where("deleted=0 OR deleted IS NULL");
+            builder.Where("is_deleted=0");
         }
         using var db = databaseConnectionFactory.GetConnection();
         return await db.QueryAsync<Car>(sqlTemplate.RawSql,sqlTemplate.Parameters);
