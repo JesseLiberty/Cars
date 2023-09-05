@@ -62,7 +62,7 @@ public class CarRepository
     public async Task<int> DeleteAsync(int id)
     {
         using var db = databaseConnectionFactory.GetConnection();
-        var query = "UPDATE car SET Deleted = 1 WHERE Id = @Id";
+        var query = "UPDATE car SET Is_Deleted = 1 WHERE Id = @Id";
         return await db.ExecuteAsync(query, new { Id = id });
     }
     
