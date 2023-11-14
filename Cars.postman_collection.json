@@ -1,0 +1,127 @@
+{
+	"info": {
+		"_postman_id": "76fef442-2937-4f8d-bc77-ad44f9e500c2",
+		"name": "Cars",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "713652",
+		"_collection_link": "https://gold-desert-518088.postman.co/workspace/Minimal-Web-API~5ada581b-8bf6-4345-b677-9ff3866629a5/collection/713652-76fef442-2937-4f8d-bc77-ad44f9e500c2?action=share&source=collection_link&creator=713652"
+	},
+	"item": [
+		{
+			"name": "GetCars",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7025/car/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7025",
+					"path": [
+						"car",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetCar",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7025/car/4",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7025",
+					"path": [
+						"car",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UpdateCar",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"id\": 4,\r\n   \"name\": \"subaru impreza\",\r\n   \"mpg\": \"36\",\r\n   \"cylinders\": \"4\",\r\n   \"displacement\": \"304\",\r\n   \"horsepower\": \"150\",\r\n   \"weight\": \"3433\",\r\n   \"acceleration\": \"12\",\r\n   \"model_year\": \"22\",\r\n   \"origin\": \"japan\",\r\n   \"is_deleted\": \"0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7025/car",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7025",
+					"path": [
+						"car"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DeleteCar",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:7025/car/4",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7025",
+					"path": [
+						"car",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "InsertCar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"name\": \"inserted car2\",\r\n   \"mpg\": \"35\",\r\n   \"cylinders\": \"4\",\r\n   \"displacement\": \"304\",\r\n   \"horsepower\": \"150\",\r\n   \"weight\": \"3433\",\r\n   \"acceleration\": \"12\",\r\n   \"model_year\": \"23\",\r\n   \"origin\": \"usa\",\r\n   \"is_deleted\": \"0\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7025/car",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7025",
+					"path": [
+						"car"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

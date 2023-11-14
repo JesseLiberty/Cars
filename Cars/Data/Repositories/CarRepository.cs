@@ -40,16 +40,17 @@ public class CarRepository
         var sql = @"
         DECLARE @InsertedRows AS TABLE (Id int);
         MERGE INTO Car AS target
-        USING (SELECT @Id AS Id, @Name AS Name, @Model_Year AS Model_Year, @Is_Deleted AS Is_Deleted) AS source 
+        USING (SELECT @Id AS Id, @Name AS Name, @Model_Year AS Model_Year, @Is_Deleted AS Is_Deleted, @Origin AS origin ) AS source 
         ON target.Id = source.Id
         WHEN MATCHED THEN 
             UPDATE SET 
                 Name = source.Name, 
                 Model_Year = source.Model_Year, 
-                Is_Deleted = source.Is_Deleted
+                Is_Deleted = source.Is_Deleted,
+                Origin = source.Origin
         WHEN NOT MATCHED THEN
-            INSERT (Name, Model_Year, Is_Deleted)
-            VALUES (source.Name, source.Model_Year, source.Is_Deleted)
+            INSERT (Name, Model_Year, Is_Deleted, Origin)
+            VALUES (source.Name, source.Model_Year, source.Is_Deleted, source.Origin)
             OUTPUT inserted.Id INTO @InsertedRows
         ;
 
