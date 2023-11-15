@@ -1,4 +1,5 @@
 using Cars.Data.Entities;
+using Cars.Data.Interfaces;
 using Cars.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,25 +10,25 @@ namespace Cars.Controllers
     public class CarController : ControllerBase
     {
         private readonly ILogger<CarController> _logger;
-        readonly CarRepository carRepository;
+        private readonly ICarRepository _carRepository;
 
         public CarController(ILogger<CarController> logger,
-            CarRepository carRepository)
+            ICarRepository carRepository)
         {
             _logger = logger;
-            this.carRepository = carRepository;
+           _carRepository = carRepository;
         }
 
         [HttpGet]
         public async Task<IEnumerable<Car>> GetAll(bool returnDeletedRecords = false)
         {
-            return await carRepository.GetAll(returnDeletedRecords);
+            return await _carRepository.GetAll(returnDeletedRecords);
         }
         
         [HttpGet("{id}")]
         public async Task<ActionResult<Car>> Get(int id)
         {
-            var car = await carRepository.Get(id);
+            var car = await _carRepository.Get(id);
             if (car == null)
             {
                 return NotFound();
@@ -43,14 +44,14 @@ namespace Cars.Controllers
                 return BadRequest("Id must be set");
             }
 
-            await carRepository.UpsertAsync(car);
+            await _carRepository.UpsertAsync(car);
             return NoContent();
         }
         
         [HttpPost]
         public async Task<ActionResult<Car>> Post([FromBody] Car car)
         {
-            var newId = await carRepository.UpsertAsync(car);
+            var newId = await _carRepository.UpsertAsync(car);
             if (newId > 0)
             {
                 car.Id = newId;
@@ -61,7 +62,7 @@ namespace Cars.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            int affectedRows = await carRepository.DeleteAsync(id);
+            int affectedRows = await _carRepository.DeleteAsync(id);
             if (affectedRows == 0)
             {
                 return NotFound();

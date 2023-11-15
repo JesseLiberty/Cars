@@ -1,4 +1,5 @@
 using Cars.Data;
+using Cars.Data.Interfaces;
 using Cars.Data.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,7 @@ var configuration = builder.Configuration;
 builder.Services.Configure<DbSettings>(configuration.GetSection("ConnectionStrings"));
 builder.Services.AddTransient<DatabaseConnectionFactory>();
 builder.Services.AddTransient<CarRepository>();
+builder.Services.RegisterDataAccessDependencies();
 
 var app = builder.Build();
 
