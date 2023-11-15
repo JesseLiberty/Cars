@@ -1,4 +1,5 @@
 using Cars.Data.Entities;
+using Cars.Data.Interfaces;
 using Dapper;
 
 namespace Cars.Data.Repositories;
@@ -6,7 +7,7 @@ namespace Cars.Data.Repositories;
 // Resources
 // https://github.com/DapperLib/Dapper
 // https://github.com/DapperLib/Dapper/tree/main/Dapper.SqlBuilder
-public class CarRepository
+public class CarRepository : ICarRepository
 {
     readonly DatabaseConnectionFactory databaseConnectionFactory;
 
