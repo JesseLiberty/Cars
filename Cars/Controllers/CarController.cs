@@ -11,12 +11,14 @@ namespace Cars.Controllers
     {
         private readonly ILogger<CarController> _logger;
         private readonly ICarRepository _carRepository;
+        private readonly int myMember;
 
         public CarController(ILogger<CarController> logger,
             ICarRepository carRepository)
         {
             _logger = logger;
            _carRepository = carRepository;
+            myMember = 42; 
         }
 
         [HttpGet]
