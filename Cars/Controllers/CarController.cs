@@ -14,7 +14,6 @@ namespace Cars.Controllers
         private readonly int myMember;
         private readonly int myMember2;
 
-
         public CarController(ILogger<CarController> logger,
             ICarRepository carRepository)
         {
